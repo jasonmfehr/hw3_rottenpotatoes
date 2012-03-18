@@ -34,9 +34,6 @@ end
 
 Then /I should see (all|none) of the movies/ do |all_none|
   expected = all_none.eql?("all") ? Movie.count : -1
-  page_body = page.body.gsub(/\n/, "").downcase
-  page_body =~ /<table id="movies"><thead>.*?<\/thead><tbody>(.*?)<\/tbody/
-  #puts "VAR 1: #{$1.split(/<tr>/).count - 1}"
-  #puts "ALL OR NONE: #{all_none}"
+  page.body.gsub(/\n/, "").downcase =~ /<table id="movies"><thead>.*?<\/thead><tbody>(.*?)<\/tbody/
   assert $1.split(/<tr>/).count - 1 == expected
 end
